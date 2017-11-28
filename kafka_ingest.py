@@ -12,7 +12,7 @@ class Producer(threading.Thread):
         producer = KafkaProducer(bootstrap_servers='localhost:9092')
         while not self.stop_event.is_set():
             response = requests.get("http://api.metro.net/agencies/lametro-rail/vehicles/")
-            producer.send('test', b"success")
+            producer.send('test', b"successfully received")
             producer.send('test', response.content)
             time.sleep(5)
         producer.close()
