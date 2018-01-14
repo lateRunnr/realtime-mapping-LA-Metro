@@ -1,0 +1,13 @@
+-- Load master data set in the raw_data set
+DROP TABLE raw_dataset;
+CREATE EXTERNAL TABLE raw_dataset(
+    timestamp STRING
+    uid STRING,
+    lat FLOAT,
+    long FLOAT,
+    routeID INT,
+   )
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ‘/‘
+STORED AS TEXTFILE
+LOCATION '/user/gisData’;
