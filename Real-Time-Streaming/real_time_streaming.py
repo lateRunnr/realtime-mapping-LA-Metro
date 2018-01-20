@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 import sys,pprint
+import happybase
 from pyspark import SparkContext
 from pyspark.streaming import StreamingContext
 from pyspark.streaming.kafka import KafkaUtils
@@ -9,6 +10,9 @@ def get_vehicle_info(line):
     return routePoint
 
 def flush_vehicle_loc(routeInfo):
+    connection = happybase.Connection(localhost)
+    connection.open()
+    routeTbl = connection.table('route_table')
     print routeInfo[0]
     for coordinates in routeInfo[1]:
         # Flush coordinates based on route
@@ -19,7 +23,6 @@ def flush_vehicle_loc(routeInfo):
 
 
 if __name__ == "__main__":
-    print "here"
     sc=SparkContext(appName="MapMyMetro")
     ssc=StreamingContext(sc,2)
     brokers, topic = sys.argv[1:]
